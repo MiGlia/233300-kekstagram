@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+  // Создаем массив скомментариями
   var COMMENTS = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',
@@ -9,85 +10,77 @@
     'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
   ];
+  // Создаем пустой массив для объектов свойств фотографий
+  var arrPhotos = [];
+  // Создаем пустой массив для номеров файлов с фото
+  var photoPicturesCount = [];
+  var countOfPhotoFiles = 25;
+  var countOfPhotos = 25;
+  var likesCount = {
+    min: 15,
+    max: 200
+  };
 
-  // var fotoNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
-  var fotoArr = [];
-  var fotoPicCount = [];
-
-  function createNumberArr(count, arr) {
-    for (var i = 1; i <= count; i++) {
+  // Функция для создания массива номеров для файлов фотографий
+  function createNumberOfPicArr(countNumber, arr) {
+    for (var i = 1; i <= countNumber; i++) {
       arr.push(i);
     }
     return arr;
   }
 
-  createNumberArr(25, fotoPicCount);
+  createNumberOfPicArr(countOfPhotoFiles, photoPicturesCount);
 
-  // Коприруем и возвращаем массив со случайной длиной
-  function functionName(arr) {
-    var newComentArr = arr.slice(0);
-    newComentArr.length = getRandomValue(1, 3);
-    return newComentArr;
-  }
-
-  // Возвращаем случайный элемент в массиве и сразу его удаляем из массива
-  function getRandomNorepeatArrayIndex(arr) {
-    return arr.splice(Math.floor(Math.random() * arr.length), 1);
-  }
-
-  function getRandomValueFromArr(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-
-  // Возвращаем ислучайное число между min (включительно) и max (не включая max)
-  function getRandomValue(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  function createArr(count, arr) {
+  // Функция для создания массива обектов со свойствами фотографий
+  function createPicturesArr(count, arr) {
     for (var i = 0; i < count; i++) {
       arr.push(
-          {url: 'photos/' + getRandomNorepeatArrayIndex(fotoPicCount) + '.jpg',
-            likes: getRandomValue(15, 200),
-            comments: functionName([getRandomValueFromArr(COMMENTS), getRandomValueFromArr(COMMENTS)])
+          {url: 'photos/' + window.util.getRandomNorepeatArrayIndex(photoPicturesCount) + '.jpg',
+            likes: window.util.getRandomValue(likesCount.min, likesCount.max),
+            comments: window.util.getNewOArrRandomLength([window.util.getRandomValueFromArr(COMMENTS), window.util.getRandomValueFromArr(COMMENTS)])
           }
       );
     }
   }
 
-  createArr(25, fotoArr);
+  createPicturesArr(countOfPhotos, arrPhotos);
 
-  var similarPicTemplate = document.querySelector('#picture-template').content;
+  // Находим шаблон для копирования
+  var similarPictureTemplate = document.querySelector('#picture-template').content;
 
-  function renderPic(arr) {
-    var picElement = similarPicTemplate.cloneNode(true);
+  // Функция для копирования шаблона и вставки в него данных
+  function renderPicture(arr) {
+    var pictureElement = similarPictureTemplate.cloneNode(true);
 
-    picElement.querySelector('img').src = arr.url;
-    picElement.querySelector('.picture-likes').textContent = arr.likes;
-    picElement.querySelector('.picture-comments').textContent = arr.comments;
-    return picElement;
+    pictureElement.querySelector('img').src = arr.url;
+    pictureElement.querySelector('.picture-likes').textContent = arr.likes;
+    pictureElement.querySelector('.picture-comments').textContent = arr.comments.length;
+    return pictureElement;
   }
 
-  var fragment = document.createDocumentFragment();
-  var picList = document.querySelector('.pictures');
+  // Создаем фрагмент для вставки фотографий
+  var pictureFragment = document.createDocumentFragment();
+  // Находим блок для вставки сгенерированных фотографий
+  var pictureList = document.querySelector('.pictures');
 
-  function drawPic(arr) {
+  // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
+  function drawPicture(arr) {
     for (var i = 0; i < arr.length; i++) {
-      fragment.appendChild(renderPic(arr[i]));
-      picList.appendChild(fragment);
+      pictureFragment.appendChild(renderPicture(arr[i]));
+      pictureList.appendChild(pictureFragment);
     }
   }
-  drawPic(fotoArr);
+  drawPicture(arrPhotos);
 
+  // Находим блок с основным фото и показываем его
   var mainPic = document.querySelector('.gallery-overlay');
   mainPic.classList.remove('hidden');
 
+  // Вставляем первый элемент из сгенерированного массива в основной блок
   function drawMainPic(arr) {
-
     mainPic.querySelector('img').src = arr[0].url;
     mainPic.querySelector('.likes-count').textContent = arr[0].likes;
-    mainPic.querySelector('.comments-count').textContent = arr[0].comments;
+    mainPic.querySelector('.comments-count').textContent = arr[0].comments.length;
   }
-
-  drawMainPic(fotoArr);
+  drawMainPic(arrPhotos);
 })();
