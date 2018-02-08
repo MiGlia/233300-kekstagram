@@ -175,18 +175,23 @@
 
   var arr1 = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
   var arr2 = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
-  var uploadEffectControls = document.querySelector('.upload-effect-controls');
+  var uploadEffectControls = uploadOverlay.querySelector('.upload-effect-controls');
 
 
   function functionName2(evt) {
-    var target = evt.target;
-    for (var i = 0; i < arr1; i++) {
-      if (target.id === arr1[i]) {
-        effectImage.classList.add('' + arr2[i]);
+    effectImage.classList.add('effect-image-preview');
+    var target = evt.target.parentNode;
+    for (var i = 0; i < arr1.length; i++) {
+      if (target.previousElementSibling.id === arr1[i]) {
+        effectImage.className = '';
+        effectImage.classList.add(arr2[i]);
       }
     }
   }
 
- uploadEffectControls.addEventListener('click', functionName2);
+  // function functionName3() {
+  //   effectImage.classList.remove('effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat');
+  // }
 
+  uploadEffectControls.addEventListener('click', functionName2);
 })();
