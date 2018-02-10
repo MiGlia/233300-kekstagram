@@ -83,115 +83,54 @@
     mainPic.querySelector('.comments-count').textContent = arr[0].comments.length;
   }
   drawMainPic(arrPhotos);
-
-
-  // ================================================================
-  var uploadFile = document.querySelector('#upload-file');
-  var uploadOverlay = document.querySelector('.upload-overlay');
-  // var loadEffect = document.querySelector('.upload-effect');
-  var uploadFormCancel = document.querySelector('.upload-form-cancel');
-
-  function openPopup() {
-    uploadOverlay.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
-  }
-
-  function closePopup() {
-    uploadOverlay.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
-  }
-
-  function onPopupEscPress(evt) {
-    if (evt.keyCode === 27) {
-      closePopup();
-    }
-  }
-
-  // function onUploadEnterPress(evt) {
-  //   if (evt.keyCode === 13) {
-  //     openPopup();
-  //   }
-  // }
-
-  uploadFile.addEventListener('change', openPopup);
-  uploadFormCancel.addEventListener('click', closePopup);
-  // uploadFile.addEventListener('keydown', onUploadEnterPress);
-
-
-  var buttonDec = document.querySelector('.upload-resize-controls-button-dec');
-  var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
-  var controlValue = document.querySelector('.upload-resize-controls-value');
-
-
-  function setControlValue() {
-    switch (controlValue.value) {
-      case '25%':
-        controlValue.value = '50%';
-        getTransformImage(effectImage, 0.5);
-        break;
-      case '50%':
-        controlValue.value = '75%';
-        getTransformImage(effectImage, 0.75);
-        break;
-      case '75%':
-        controlValue.value = '100%';
-        getTransformImage(effectImage, 1);
-        break;
-    }
-  }
-
-
-  function getTransformImage(elementOfTransform, valueOfScale) {
-    elementOfTransform.style.transform = 'scale(' + (valueOfScale) + ')';
-  }
-
-  function setControlValue2() {
-    switch (controlValue.value) {
-      case '50%':
-        controlValue.value = '25%';
-        getTransformImage(effectImage, 0.25);
-        break;
-      case '75%':
-        controlValue.value = '50%';
-        getTransformImage(effectImage, 0.5);
-        break;
-      case '100%':
-        controlValue.value = '75%';
-        getTransformImage(effectImage, 0.75);
-        break;
-    }
-  }
-
-  buttonInc.addEventListener('click', setControlValue);
-  buttonDec.addEventListener('click', setControlValue2);
-
-  var effectImage = document.querySelector('.effect-image-preview');
-
-
-  // функция для добавления классов фильтров
-  // function getFilterClass() {
-  //
-  // }
-
-  var arr1 = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
-  var arr2 = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
-  var uploadEffectControls = uploadOverlay.querySelector('.upload-effect-controls');
-
-
-  function functionName2(evt) {
-    effectImage.classList.add('effect-image-preview');
-    var target = evt.target.parentNode;
-    for (var i = 0; i < arr1.length; i++) {
-      if (target.previousElementSibling.id === arr1[i]) {
-        effectImage.className = '';
-        effectImage.classList.add(arr2[i]);
-      }
-    }
-  }
-
-  // function functionName3() {
-  //   effectImage.classList.remove('effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat');
-  // }
-
-  uploadEffectControls.addEventListener('click', functionName2);
 })();
+
+// ====================================================================================
+// 1. Копируем шаблон элемента и вставляем в него данные и через dataset добавляем ему атрибут i;
+// 2. Всталяем фото во фрагмент и отрисовываем их на странице
+//    При этом ему должны добавляться атрибуты i (0,1,2,3...);
+// 3. Далее повесить обработчик на контейнер с картинками и при нажатии отлаливать на какой картинке был клик
+//   и открывать фото с соответствующим атрибутом
+//   и вставлять соответствующую информацию в основной блок.
+//   Это как я думаю, но что то не получается. Может вообще не так все понимаю?
+//   Может логика другая
+//   Подскажи пожалуйста.
+
+// 1.// Функция для копирования шаблона и вставки в него данных
+// function renderPicture(arr, i) {
+//   var pictureElement = similarPictureTemplate.cloneNode(true);
+//
+//   pictureElement.querySelector('img').src = arr.url;
+//   pictureElement.querySelector('.picture-likes').textContent = arr.likes;
+//   pictureElement.querySelector('.picture-comments').textContent = arr.comments.length;
+//   pictureElement.dataset.numPic = i;
+//   return pictureElement;
+// }
+
+// 2. // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
+// function drawPicture() {
+//   for (var i = 0; i < arrPhotos.length; i++) {
+//     pictureFragment.appendChild(renderPicture(arrPhotos[i]));
+//     pictureList.appendChild(pictureFragment);
+//   }
+// }
+//
+// // Вставляем элемент из сгенерированного массива в основной блок
+// function drawMainPic(arr) {
+//   mainPic.querySelector('img').src = arr.url;
+//   mainPic.querySelector('.likes-count').textContent = arr.likes;
+//   mainPic.querySelector('.comments-count').textContent = arr.comments.length;
+// }
+
+// Далее хочу повесит обработчик на контейнер с картинками и вставлять соответствующую информацию в основной блок.
+// Что-то типа
+
+// function setFilterToImage(evt, arr) {
+//   effectImage.classList.add('effect-image-preview');
+//   var target = evt.target;
+//     if (target.tagName === 'IMG') {
+//       drawMainPic(arr[target.dataset.numPic]);
+//       openPopup();
+//     }
+//   }
+// }
