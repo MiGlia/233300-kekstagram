@@ -49,14 +49,14 @@
   var similarPictureTemplate = document.querySelector('#picture-template').content;
 
   // Функция для копирования шаблона и вставки в него данных
-  function renderPicture(arr) {
-    var pictureElement = similarPictureTemplate.cloneNode(true);
-
-    pictureElement.querySelector('img').src = arr.url;
-    pictureElement.querySelector('.picture-likes').textContent = arr.likes;
-    pictureElement.querySelector('.picture-comments').textContent = arr.comments.length;
-    return pictureElement;
-  }
+  // function renderPicture(arr) {
+  //   var pictureElement = similarPictureTemplate.cloneNode(true);
+  //
+  //   pictureElement.querySelector('img').src = arr.url;
+  //   pictureElement.querySelector('.picture-likes').textContent = arr.likes;
+  //   pictureElement.querySelector('.picture-comments').textContent = arr.comments.length;
+  //   return pictureElement;
+  // }
 
   // Создаем фрагмент для вставки фотографий
   var pictureFragment = document.createDocumentFragment();
@@ -64,12 +64,34 @@
   var pictureList = document.querySelector('.pictures');
 
   // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
-  function drawPicture(arr) {
-    for (var i = 0; i < arr.length; i++) {
-      pictureFragment.appendChild(renderPicture(arr[i]));
+  // function drawPicture(arr) {
+  //   for (var i = 0; i < arr.length; i++) {
+  //     pictureFragment.appendChild(renderPicture(arr[i]));
+  //     pictureList.appendChild(pictureFragment);
+  //   }
+  // }
+  // drawPicture(arrPhotos);
+
+  // 1.// Функция для копирования шаблона и вставки в него данных
+  function renderPicture(arr, i) {
+    var pictureElement = similarPictureTemplate.cloneNode(true);
+
+    pictureElement.querySelector('img').src = arr.url;
+    pictureElement.querySelector('.picture-likes').textContent = arr.likes;
+    pictureElement.querySelector('.picture-comments').textContent = arr.comments.length;
+    // вот эдесь у меня начинаются проблемы, не могу задать атрибут, что-то я не так пониамаю видимо
+    pictureElement.dataset.numPic = i;
+    return pictureElement;
+  }
+
+  // 2. // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
+  function drawPicture() {
+    for (var i = 0; i < arrPhotos.length; i++) {
+      pictureFragment.appendChild(renderPicture(arrPhotos[i]));
       pictureList.appendChild(pictureFragment);
     }
   }
+
   drawPicture(arrPhotos);
 
   // Находим блок с основным фото и показываем его
@@ -95,7 +117,7 @@
 //   Это как я думаю, но что то не получается. Может вообще не так все понимаю?
 //   Может логика другая
 //   Подскажи пожалуйста.
-
+//
 // 1.// Функция для копирования шаблона и вставки в него данных
 // function renderPicture(arr, i) {
 //   var pictureElement = similarPictureTemplate.cloneNode(true);
@@ -106,7 +128,7 @@
 //   pictureElement.dataset.numPic = i;
 //   return pictureElement;
 // }
-
+//
 // 2. // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
 // function drawPicture() {
 //   for (var i = 0; i < arrPhotos.length; i++) {
@@ -121,10 +143,10 @@
 //   mainPic.querySelector('.likes-count').textContent = arr.likes;
 //   mainPic.querySelector('.comments-count').textContent = arr.comments.length;
 // }
-
+//
 // Далее хочу повесит обработчик на контейнер с картинками и вставлять соответствующую информацию в основной блок.
 // Что-то типа
-
+//
 // function setFilterToImage(evt, arr) {
 //   effectImage.classList.add('effect-image-preview');
 //   var target = evt.target;
