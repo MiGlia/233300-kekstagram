@@ -4,11 +4,13 @@
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
+  var ESC_KEYCODE = 27;
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
   // окна Редактирования фото по нажатию на Esc
-  function openPopup() {
+  function openPopup(e) {
+    e.preventDefault();
     uploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
   }
@@ -19,11 +21,12 @@
   function closePopup() {
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
+    uploadFile.value = '';
   }
 
   // Функция для закрытия окна Редактирования фото с клавиши Esc
-  function onPopupEscPress(evt) {
-    if (evt.keyCode === 27) {
+  function onPopupEscPress(e) {
+    if (e.keyCode === ESC_KEYCODE) {
       closePopup();
     }
   }
@@ -41,7 +44,8 @@
 
   // Функции для изменеия надписи масштаба на кнопках и добавления
   // картинке соответствующего этому масштабу стиля scale
-  function setControlValueInc() {
+  function setControlValueInc(e) {
+    e.preventDefault();
     switch (controlValue.value) {
       case '25%':
         controlValue.value = '50%';
@@ -58,7 +62,8 @@
     }
   }
 
-  function setControlValueDec() {
+  function setControlValueDec(e) {
+    e.preventDefault();
     switch (controlValue.value) {
       case '50%':
         controlValue.value = '25%';
@@ -92,9 +97,9 @@
   // Фуекция для смены филтра на редактируемой картинке
   // Если id родителя перед элементом на который произошло нажатие
   // то добавляем картинке соответствующий класс
-  function setFilterToImage(evt) {
+  function setFilterToImage(e) {
     effectImage.classList.add('effect-image-preview');
-    var target = evt.target.parentNode;
+    var target = e.target.parentNode;
     for (var i = 0; i < ARR_OF_INPUT_IDS.length; i++) {
       if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
         effectImage.className = '';
