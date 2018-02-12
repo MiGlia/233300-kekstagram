@@ -48,6 +48,11 @@
   // Находим шаблон для копирования
   var similarPictureTemplate = document.querySelector('#picture-template').content;
 
+  // Создаем фрагмент для вставки фотографий
+  var pictureFragment = document.createDocumentFragment();
+  // Находим блок для вставки сгенерированных фотографий
+  var pictureContainer = document.querySelector('.pictures');
+
   // Функция для копирования шаблона и вставки в него данных
   function renderPicture(arr) {
     var pictureElement = similarPictureTemplate.cloneNode(true);
@@ -58,29 +63,62 @@
     return pictureElement;
   }
 
-  // Создаем фрагмент для вставки фотографий
-  var pictureFragment = document.createDocumentFragment();
-  // Находим блок для вставки сгенерированных фотографий
-  var pictureList = document.querySelector('.pictures');
-
   // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
   function drawPicture(arr) {
     for (var i = 0; i < arr.length; i++) {
       pictureFragment.appendChild(renderPicture(arr[i]));
-      pictureList.appendChild(pictureFragment);
+      pictureContainer.appendChild(pictureFragment);
     }
   }
   drawPicture(arrPhotos);
 
-  // Находим блок с основным фото и показываем его
-  var mainPic = document.querySelector('.gallery-overlay');
-  mainPic.classList.remove('hidden');
+  // Находим блок с увеличенным фото
+  var overlayElement = document.querySelector('.gallery-overlay');
 
-  // Вставляем первый элемент из сгенерированного массива в основной блок
-  function drawMainPic(arr) {
-    mainPic.querySelector('img').src = arr[0].url;
-    mainPic.querySelector('.likes-count').textContent = arr[0].likes;
-    mainPic.querySelector('.comments-count').textContent = arr[0].comments.length;
+  // Вставляем элемент из сгенерированного массива в блок с увеличенным фото
+  function getOverlayPhoto(photo) {
+    overlayElement.querySelector('img').src = photo.url;
+    overlayElement.querySelector('.likes-count').textContent = photo.likes;
+    overlayElement.querySelector('.comments-count').textContent = photo.comments.length;
+    return overlayElement;
   }
-  drawMainPic(arrPhotos);
+
+  // Функция для открытя увеличенной картинки по клику на соответствующую картинку в галерее
+  function onShowPhoto(e) {
+    e.preventDefault();
+    var target = e.target; // определяем картинку по которой был клик
+    for (var i = 0; i < pictureContainer.children.length; i++) {
+      if (pictureContainer.children[i].querySelector('img') === target) { // Если картинка совпадает с картинкой по которой был сделан клик, то вставляем данные элемента в блок с увеличенным фото
+        getOverlayPhoto(arrPhotos[i]);
+        openOverlay();
+      }
+    }
+  }
+
+  // Объявляем переменные
+  var galleryOverlay = document.querySelector('.gallery-overlay');
+  var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
+
+  // Функция для открытия окна с увеличенным фото
+  function openOverlay() {
+    overlayElement.classList.remove('hidden');
+    document.addEventListener('keydown', onOverlayEscPress);
+  }
+
+  // Функция для закрытия окна с увеличенным фото
+  function closeOverlay() {
+    overlayElement.classList.add('hidden');
+    document.removeEventListener('keydown', onOverlayEscPress);
+  }
+
+  // Функция для закрытия окна с увеличенным фото с клавиши Esc
+  function onOverlayEscPress(e) {
+    if (e.keyCode === 27) {
+      closeOverlay();
+    }
+  }
+
+  // Навешиваем обработчики событий
+  pictureContainer.addEventListener('click', onShowPhoto);
+  galleryOverlayClose.addEventListener('click', closeOverlay);
 })();
