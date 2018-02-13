@@ -25,9 +25,15 @@
   }
 
   // Функция для закрытия окна Редактирования фото с клавиши Esc
+  // Если нажатие происходит в TEXTAREA, то отменяем закрытие окна
   function onPopupEscPress(e) {
+    var target = e.target;
     if (e.keyCode === ESC_KEYCODE) {
-      closePopup();
+      if (target.tagName === 'TEXTAREA') {
+        e.preventDefault();
+      } else {
+        closePopup();
+      }
     }
   }
 
