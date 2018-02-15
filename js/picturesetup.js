@@ -107,6 +107,9 @@
     effectImage.classList.add('effect-image-preview');
     var target = e.target.parentNode;
     for (var i = 0; i < ARR_OF_INPUT_IDS.length; i++) {
+      if (target.tagName === 'DIV') {
+        return;
+      }
       if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
         effectImage.className = '';
         effectImage.classList.add(ARR_OF_IMAGE_CLASSES[i]);
@@ -116,4 +119,8 @@
 
   // Навешиваем обработчики событий
   uploadEffectControls.addEventListener('click', setFilterToImage);
+
+  window.ps = {
+    effectImage: effectImage
+  }
 })();
