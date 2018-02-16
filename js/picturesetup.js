@@ -5,7 +5,7 @@
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var ESC_KEYCODE = 27;
-  var upload-effect-level = document.querySelector('.upload-effect-level');
+  var uploadEffectLevel = document.querySelector('.upload-effect-level');
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
@@ -13,6 +13,8 @@
   function openPopup(e) {
     e.preventDefault();
     uploadOverlay.classList.remove('hidden');
+    uploadEffectLevel.classList.add('hidden');
+    effectImage.id = 'effect-none';
     document.addEventListener('keydown', onPopupEscPress);
   }
 
@@ -119,6 +121,7 @@
         effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 1 + ')';
         window.slider.uploadEffectLevelPin.style.left = '455px';
         window.slider.uploadEffectLevelVal.style.width = '455px';
+
         // if (effectImage.id === )
       }
     }
@@ -128,13 +131,12 @@
   uploadEffectControls.addEventListener('click', setFilterToImage);
 
 
-
   function setControlValueDecGGG() {
 
     switch (window.ps.effectImage.id) {
 
       case 'effect-none':
-        window.slider.functionName2('', '', '');
+        effectImage.style.filter = '';
         break;
       case 'effect-chrome':
         window.slider.functionName2('grayscale', 1, '');
@@ -153,6 +155,28 @@
         break;
     }
   }
+
+  // function sliderHidden(e) {
+  //   var target = e.target.parentNode;
+  //   if (target.previousElementSibling.id !== 'upload-effect-none') {
+  //     uploadEffectLevel.classList.toggle('.hidden');
+  //   } else {
+  //     uploadEffectLevel.classList.add('.hidden');
+  //   }
+  // }
+
+  function sliderHidden(e) {
+    var target = e.target.parentNode;
+    if (target.previousElementSibling.value === 'none') {
+      uploadEffectLevel.classList.add('hidden');
+    } else {
+      uploadEffectLevel.classList.remove('hidden');
+    }
+
+  }
+
+
+  uploadEffectControls.addEventListener('click', sliderHidden);
 
   window.ps = {
     effectImage: effectImage,

@@ -59,7 +59,6 @@
     heat: 'brightness'
   };
 
-  //
   function functionName2(elem, max, n) {
     var coef = uploadEffectLevelPin.offsetLeft / 455;
     window.ps.effectImage.style.filter = elem + '(' + (max * coef) + n + ')';
