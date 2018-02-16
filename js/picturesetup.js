@@ -99,6 +99,7 @@
   var uploadEffectControls = document.querySelector('.upload-effect-controls');
   var ARR_OF_INPUT_IDS = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
   var ARR_OF_IMAGE_CLASSES = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
+  var ARR_OF_IMAGE_FILTERS = ['none', 'grayscale', 'sepia', 'invert', 'blur', 'brightness'];
 
   // Фуекция для смены филтра на редактируемой картинке
   // Если id родителя перед элементом на который произошло нажатие
@@ -113,6 +114,7 @@
       if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
         effectImage.className = '';
         effectImage.classList.add(ARR_OF_IMAGE_CLASSES[i]);
+        effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 1 + ')';
       }
     }
   }
@@ -122,5 +124,5 @@
 
   window.ps = {
     effectImage: effectImage
-  }
+  };
 })();
