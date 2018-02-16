@@ -5,6 +5,7 @@
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var ESC_KEYCODE = 27;
+  var upload-effect-level = document.querySelector('.upload-effect-level');
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
@@ -114,7 +115,11 @@
       if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
         effectImage.className = '';
         effectImage.classList.add(ARR_OF_IMAGE_CLASSES[i]);
+        effectImage.id = ARR_OF_IMAGE_CLASSES[i];
         effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 1 + ')';
+        window.slider.uploadEffectLevelPin.style.left = '455px';
+        window.slider.uploadEffectLevelVal.style.width = '455px';
+        // if (effectImage.id === )
       }
     }
   }
@@ -122,7 +127,36 @@
   // Навешиваем обработчики событий
   uploadEffectControls.addEventListener('click', setFilterToImage);
 
+
+
+  function setControlValueDecGGG() {
+
+    switch (window.ps.effectImage.id) {
+
+      case 'effect-none':
+        window.slider.functionName2('', '', '');
+        break;
+      case 'effect-chrome':
+        window.slider.functionName2('grayscale', 1, '');
+        break;
+      case 'effect-sepia':
+        window.slider.functionName2('sepia', 1, '');
+        break;
+      case 'effect-marvin':
+        window.slider.functionName2('invert', 1, '');
+        break;
+      case 'effect-heat':
+        window.slider.functionName2('brightness', 3, '');
+        break;
+      case 'effect-phobos':
+        window.slider.functionName2('blur', 3, 'px');
+        break;
+    }
+  }
+
   window.ps = {
-    effectImage: effectImage
+    effectImage: effectImage,
+    setControlValueDecGGG: setControlValueDecGGG
   };
+
 })();
