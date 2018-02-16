@@ -5,6 +5,7 @@
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var ESC_KEYCODE = 27;
+  // var uploadEffectLevel = document.querySelector('.upload-effect-level');
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
@@ -12,6 +13,8 @@
   function openPopup(e) {
     e.preventDefault();
     uploadOverlay.classList.remove('hidden');
+    window.filtereffect .uploadEffectLevel.classList.add('hidden');
+    window.filtereffect.resetFilter();
     document.addEventListener('keydown', onPopupEscPress);
   }
 
@@ -95,25 +98,8 @@
   buttonInc.addEventListener('click', setControlValueInc);
   buttonDec.addEventListener('click', setControlValueDec);
 
-  // Объявляем Массивы классов и id
-  var uploadEffectControls = document.querySelector('.upload-effect-controls');
-  var ARR_OF_INPUT_IDS = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
-  var ARR_OF_IMAGE_CLASSES = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
+  window.picturesetup = {
+    effectImage: effectImage,
+  };
 
-  // Фуекция для смены филтра на редактируемой картинке
-  // Если id родителя перед элементом на который произошло нажатие
-  // то добавляем картинке соответствующий класс
-  function setFilterToImage(e) {
-    effectImage.classList.add('effect-image-preview');
-    var target = e.target.parentNode;
-    for (var i = 0; i < ARR_OF_INPUT_IDS.length; i++) {
-      if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
-        effectImage.className = '';
-        effectImage.classList.add(ARR_OF_IMAGE_CLASSES[i]);
-      }
-    }
-  }
-
-  // Навешиваем обработчики событий
-  uploadEffectControls.addEventListener('click', setFilterToImage);
 })();
