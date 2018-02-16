@@ -115,14 +115,21 @@
         return;
       }
       if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
+        if (target.previousElementSibling.id === 'upload-effect-none') {
+          effectImage.style.filter = '';
+        }
         effectImage.className = '';
         effectImage.classList.add(ARR_OF_IMAGE_CLASSES[i]);
         effectImage.id = ARR_OF_IMAGE_CLASSES[i];
         effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 1 + ')';
+        if (effectImage.id === 'effect-phobos') {
+          effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 3 + 'px' + ')'
+        }
+        if (effectImage.id === 'effect-heat') {
+          effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 3 + ')'
+        }
         window.slider.uploadEffectLevelPin.style.left = '455px';
         window.slider.uploadEffectLevelVal.style.width = '455px';
-
-        // if (effectImage.id === )
       }
     }
   }
