@@ -5,7 +5,7 @@
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
   var ESC_KEYCODE = 27;
-  var uploadEffectLevel = document.querySelector('.upload-effect-level');
+  // var uploadEffectLevel = document.querySelector('.upload-effect-level');
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
@@ -13,8 +13,8 @@
   function openPopup(e) {
     e.preventDefault();
     uploadOverlay.classList.remove('hidden');
-    uploadEffectLevel.classList.add('hidden');
-    effectImage.id = 'effect-none';
+    window.filtereffect .uploadEffectLevel.classList.add('hidden');
+    window.filtereffect.resetFilter();
     document.addEventListener('keydown', onPopupEscPress);
   }
 
@@ -98,96 +98,8 @@
   buttonInc.addEventListener('click', setControlValueInc);
   buttonDec.addEventListener('click', setControlValueDec);
 
-  // Объявляем Массивы классов и id
-  var uploadEffectControls = document.querySelector('.upload-effect-controls');
-  var ARR_OF_INPUT_IDS = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
-  var ARR_OF_IMAGE_CLASSES = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
-  var ARR_OF_IMAGE_FILTERS = ['none', 'grayscale', 'sepia', 'invert', 'blur', 'brightness'];
-
-  // Фуекция для смены филтра на редактируемой картинке
-  // Если id родителя перед элементом на который произошло нажатие
-  // то добавляем картинке соответствующий класс
-  function setFilterToImage(e) {
-    effectImage.classList.add('effect-image-preview');
-    var target = e.target.parentNode;
-    for (var i = 0; i < ARR_OF_INPUT_IDS.length; i++) {
-      if (target.tagName === 'DIV') {
-        return;
-      }
-      if (target.previousElementSibling.id === ARR_OF_INPUT_IDS[i]) {
-        if (target.previousElementSibling.id === 'upload-effect-none') {
-          effectImage.style.filter = '';
-        }
-        effectImage.className = '';
-        effectImage.classList.add(ARR_OF_IMAGE_CLASSES[i]);
-        effectImage.id = ARR_OF_IMAGE_CLASSES[i];
-        effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 1 + ')';
-        if (effectImage.id === 'effect-phobos') {
-          effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 3 + 'px' + ')'
-        }
-        if (effectImage.id === 'effect-heat') {
-          effectImage.style.filter = ARR_OF_IMAGE_FILTERS[i] + '(' + 3 + ')'
-        }
-        window.slider.uploadEffectLevelPin.style.left = '455px';
-        window.slider.uploadEffectLevelVal.style.width = '455px';
-      }
-    }
-  }
-
-  // Навешиваем обработчики событий
-  uploadEffectControls.addEventListener('click', setFilterToImage);
-
-
-  function setControlValueDecGGG() {
-
-    switch (window.ps.effectImage.id) {
-
-      case 'effect-none':
-        effectImage.style.filter = '';
-        break;
-      case 'effect-chrome':
-        window.slider.functionName2('grayscale', 1, '');
-        break;
-      case 'effect-sepia':
-        window.slider.functionName2('sepia', 1, '');
-        break;
-      case 'effect-marvin':
-        window.slider.functionName2('invert', 1, '');
-        break;
-      case 'effect-heat':
-        window.slider.functionName2('brightness', 3, '');
-        break;
-      case 'effect-phobos':
-        window.slider.functionName2('blur', 3, 'px');
-        break;
-    }
-  }
-
-  // function sliderHidden(e) {
-  //   var target = e.target.parentNode;
-  //   if (target.previousElementSibling.id !== 'upload-effect-none') {
-  //     uploadEffectLevel.classList.toggle('.hidden');
-  //   } else {
-  //     uploadEffectLevel.classList.add('.hidden');
-  //   }
-  // }
-
-  function sliderHidden(e) {
-    var target = e.target.parentNode;
-    if (target.previousElementSibling.value === 'none') {
-      uploadEffectLevel.classList.add('hidden');
-    } else {
-      uploadEffectLevel.classList.remove('hidden');
-    }
-
-  }
-
-
-  uploadEffectControls.addEventListener('click', sliderHidden);
-
-  window.ps = {
+  window.picturesetup = {
     effectImage: effectImage,
-    setControlValueDecGGG: setControlValueDecGGG
   };
 
 })();

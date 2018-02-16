@@ -1,34 +1,39 @@
 'use strict';
 (function () {
+  // Задаем переменные
   var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin');
   var uploadEffectLevelVal = document.querySelector('.upload-effect-level-val');
-  var uploadEffectLevelValue = document.querySelector('.upload-effect-level-value');
 
+
+  // добавляем обработчик на маркер для перемещения пина
   uploadEffectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
+    // начальные координаты пина слайдера
     var startCoords = {
       x: evt.clientX
     };
 
     function onMouseMove(moveEvt) {
-
+    // смещение пина
       var shift = {
         x: startCoords.x - moveEvt.clientX
       };
 
+      // новыеначальные координаты пина слайдера
       startCoords = {
         x: moveEvt.clientX
       };
 
+      // Записываем новые координаты в стили пина и полоски слайдера
       uploadEffectLevelPin.style.left = (uploadEffectLevelPin.offsetLeft - shift.x) + 'px';
       uploadEffectLevelVal.style.width = (uploadEffectLevelPin.offsetLeft - shift.x) + 'px';
-      uploadEffectLevelValue.value = (uploadEffectLevelPin.offsetLeft / 455) * 100;
-      functionName();
-      window.ps.setControlValueDecGGG();
 
+      setLimitCoordToSlider();
+      window.filtereffect.setFilterEffectToImage();
     }
 
+    // При подгятии мыши убраем обработчики опускания и движения мыши
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
@@ -38,68 +43,28 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-
   });
 
-
-  function functionName() {
-    if (uploadEffectLevelPin.offsetLeft < 0) {
-      uploadEffectLevelPin.style.left = '0px';
-    }
-    if (uploadEffectLevelPin.offsetLeft > 455) {
-      uploadEffectLevelPin.style.left = '455px';
-    }
-  }
-
-  var filtrtImage = {
-    chrome: 'grayscale',
-    sepia: 'sepia',
-    marvin: 'invert',
-    phobos: 'blur',
-    heat: 'brightness'
+  var pin = {
+    min: '0px',
+    max: '455px'
   };
 
-  function functionName2(elem, max, n) {
-    var coef = uploadEffectLevelPin.offsetLeft / 455;
-    window.ps.effectImage.style.filter = elem + '(' + (max * coef) + n + ')';
+  // Функция для ограничения координат
+  function setLimitCoordToSlider() {
+    if (uploadEffectLevelPin.offsetLeft < 0 || uploadEffectLevelVal.offsetLeft < 0) {
+      uploadEffectLevelPin.style.left = pin.min;
+      uploadEffectLevelVal.style.width = pin.min;
+    }
+    if (uploadEffectLevelPin.offsetLeft > 455 || uploadEffectLevelVal.offsetLeft) {
+      uploadEffectLevelPin.style.left = pin.max;
+      uploadEffectLevelVal.style.width = pin.max;
+    }
   }
 
   window.slider = {
-    functionName2: functionName2,
     uploadEffectLevelPin: uploadEffectLevelPin,
     uploadEffectLevelVal: uploadEffectLevelVal
   };
-
-  // function functionName2(elem, max) {
-  //   var coef = uploadEffectLevelPin.offsetLeft / 455;
-  //   var b = window.ps.effectImage.style.filter;
-  //   b = elem + '(' + (max * coef) + ')';
-  //   return b;
-  // }
-
-  // function functionName3() {
-  //   uploadEffectLevelVal.value = (uploadEffectLevelPin.offsetLeft / 455) * 100;
-  // }
-
-  // function setControlValueDecGGG() {
-  //
-  //   switch (window.ps.effectImage.id) {
-  //     case 'effect-chrome':
-  //       functionName2('grayscale', 1, '');
-  //       break;
-  //     case 'effect-sepia':
-  //       functionName2('sepia', 1, '');
-  //       break;
-  //     case 'effect-marvin':
-  //       functionName2('invert', 1, '');
-  //       break;
-  //     case 'effect-heat':
-  //       functionName2('brightness', 3, '');
-  //       break;
-  //     case 'effect-phobos':
-  //       functionName2('blur', 3, 'px');
-  //       break;
-  //   }
-  // }
 
 })();
