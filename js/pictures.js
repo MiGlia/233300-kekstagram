@@ -5,6 +5,7 @@
   var similarPictureTemplate = document.querySelector('#picture-template').content;
   // Создаем фрагмент для вставки фотографий
   var pictureFragment = document.createDocumentFragment();
+  var arrPhotos = [];
 
   // Функция для копирования шаблона и вставки в него данных
   function renderPicture(arr) {
@@ -16,12 +17,23 @@
     return pictureElement;
   }
 
+
   // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
   function drawPicture(arr) {
     for (var i = 0; i < arr.length; i++) {
       pictureFragment.appendChild(renderPicture(arr[i]));
       window.previewpictures.pictureContainer.appendChild(pictureFragment);
+      arrPhotos = arr;
     }
+    return arrPhotos;
+    debugger;
   }
-  drawPicture(window.picturedata.arrPhotos);
+  // drawPicture(window.picturedata.arrPhotos);
+
+  window.backend.load(drawPicture, window.backend.errorHandler);
+
+  window.pictures = {
+    arrPhotos: arrPhotos
+  };
+
 })();
