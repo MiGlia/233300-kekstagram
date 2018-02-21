@@ -25,7 +25,6 @@
       arrPhotos = arr;
     }
     return arrPhotos;
-    debugger;
   }
   // drawPicture(window.picturedata.arrPhotos);
 
