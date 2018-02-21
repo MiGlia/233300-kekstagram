@@ -14,7 +14,6 @@
       if (pictureContainer.children[i].querySelector('img') === target) { // Если картинка совпадает с картинкой по которой был сделан клик, то вставляем данные элемента в блок с увеличенным фото
         getOverlayPhoto(window.pictures.arrPhotos[i]);
         openOverlay();
-        debugger;
       }
     }
   }
