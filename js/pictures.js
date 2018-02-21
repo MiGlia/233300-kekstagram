@@ -17,7 +17,6 @@
     return pictureElement;
   }
 
-
   // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
   function drawPicture(arr) {
     for (var i = 0; i < arr.length; i++) {

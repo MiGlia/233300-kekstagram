@@ -21,12 +21,11 @@
 
 
   // Вставляем элемент из сгенерированного массива в блок с увеличенным фото
-  function getOverlayPhoto(`photo`) {
+  function getOverlayPhoto(photo) {
     overlayElement.querySelector('img').src = photo.url;
     overlayElement.querySelector('.likes-count').textContent = photo.likes;
     overlayElement.querySelector('.comments-count').textContent = photo.comments;
     return overlayElement;
-    debugger;
   }
 
   // Объявляем переменные
