@@ -100,6 +100,7 @@
 
   window.picturesetup = {
     effectImage: effectImage,
+    closePopup: closePopup
   };
 
 })();

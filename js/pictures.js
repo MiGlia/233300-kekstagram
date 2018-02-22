@@ -18,10 +18,14 @@
 
   // Функция для вставки фотографий во фрагмент и отрисовки мх на странице
   function drawPicture(arr) {
-    for (var i = 0; i < arr.length; i++) {
-      pictureFragment.appendChild(renderPicture(arr[i]));
+    arr.forEach(function (elemPhotoArr) {
+      pictureFragment.appendChild(renderPicture(elemPhotoArr));
       window.previewpictures.pictureContainer.appendChild(pictureFragment);
-    }
+    });
+    window.pictures = arr;
+    return arr;
   }
-  drawPicture(window.picturedata.arrPhotos);
+
+  // Загрузка с сервера
+  window.backend.load(drawPicture, window.backend.errorHandler);
 })();

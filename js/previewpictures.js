@@ -1,6 +1,5 @@
 'use strict';
 (function () {
-
   // Находим блок для вставки сгенерированных фотографий
   var pictureContainer = document.querySelector('.pictures');
   // Находим блок с увеличенным фото
@@ -12,7 +11,7 @@
     var target = e.target; // определяем картинку по которой был клик
     for (var i = 0; i < pictureContainer.children.length; i++) {
       if (pictureContainer.children[i].querySelector('img') === target) { // Если картинка совпадает с картинкой по которой был сделан клик, то вставляем данные элемента в блок с увеличенным фото
-        getOverlayPhoto(window.picturedata.arrPhotos[i]);
+        getOverlayPhoto(window.pictures[i]);
         openOverlay();
       }
     }
@@ -22,7 +21,7 @@
   function getOverlayPhoto(photo) {
     overlayElement.querySelector('img').src = photo.url;
     overlayElement.querySelector('.likes-count').textContent = photo.likes;
-    overlayElement.querySelector('.comments-count').textContent = photo.comments.length;
+    overlayElement.querySelector('.comments-count').textContent = photo.comments;
     return overlayElement;
   }
 
