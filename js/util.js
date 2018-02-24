@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+
   var arrLength = {
     min: 1,
     max: 3
@@ -27,10 +28,22 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  // Функция для перемешивания массива
+  function compareRandom(a, b) {
+    if (a > b) {
+      return 1;
+    }
+    if (a < b) {
+      return -1;
+    }
+    return Math.random() - 0.5;
+  }
+
   window.util = {
     getNewOArrRandomLength: getNewOArrRandomLength,
     getRandomNorepeatArrayIndex: getRandomNorepeatArrayIndex,
     getRandomValueFromArr: getRandomValueFromArr,
-    getRandomValue: getRandomValue
+    getRandomValue: getRandomValue,
+    compareRandom: compareRandom
   };
 })();
