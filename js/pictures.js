@@ -28,91 +28,77 @@
   // Загрузка с сервера
   window.backend.load(drawPicture, window.backend.errorHandler);
 
-  // ========================================================================
   var filters = document.querySelector('.filters');
   var filterDiscussed = document.querySelector('#filter-discussed');
   var filterPopular = document.querySelector('#filter-popular');
   var filterRandom = document.querySelector('#filter-random');
   var filterRecommend = document.querySelector('#filter-recommend');
-  var pic = document.querySelector('.pictures');
+  var picElements = document.querySelector('.pictures');
 
+  // Показываем фильтры
   filters.classList.remove('filters-inactive');
 
-  function sortByComments(pictures) {
+  // Функция сортировки массива по комментариям
+  function getSortArrByComments(pictures) {
     var sortArr = pictures;
     sortArr.sort(function (a, b) {
-      return a.comments.length - b.comments.length;
+      return b.comments.length - a.comments.length;
     });
     return sortArr;
   }
 
-  function sortByLikes(a, b) {
-    return b.likes - a.likes;
+  // Функция сортировки массива по лайкам
+  function getSortArrByLikes(pictures) {
+    var sortArr = pictures;
+    sortArr.sort(function (a, b) {
+      return b.likes - a.likes;
+    });
+    return sortArr;
   }
 
-  function reset(elem) {
+  // сброс картинок(удаление)
+  function resetPicture(elem) {
     elem.innerHTML = '';
   }
 
+  // Функция для выбора вид сортировки
+  // Возвращает отсортированный массив
   function changeFilterSort() {
-    var filterSortElements = document.querySelectorAll('.filters input[type="radio"]');
+    var filterSortElements = document.querySelectorAll('.filters input');
     var filterSort;
     filterSortElements.forEach(function (sortElements) {
       if (sortElements.checked) {
         var filter = sortElements.value;
         var copyfilterSort = window.pictures.slice(0);
-        // var filterSort;
+        console.log(window.pictures);
         switch (filter) {
           case 'recommend':
-            filterSort = copyfilterSort;
+            filterSort = window.pictures;
             break;
           case 'popular':
-            filterSort = sortByLikes(copyfilterSort);
+            filterSort = getSortArrByLikes(copyfilterSort);
             break;
           case 'discussed':
-            filterSort = sortByComments(copyfilterSort);
+            filterSort = getSortArrByComments(copyfilterSort);
             break;
-          // case 'random':
-          //   filterSort = sortFilterRandomize(window.pictures);
-          //   break;
+          case 'random':
+            filterSort = copyfilterSort.sort(window.util.compareRandom);
+            break;
         }
-
       }
-      debugger;
     });
     return filterSort;
   }
 
-
-  function UpdatePicture() {
-    reset(pic);
+  // Функция для отрисовки отсортированных фото
+  function setSortPicture() {
+    resetPicture(picElements);
     drawPicture(changeFilterSort());
   }
 
-  filterDiscussed.addEventListener('click', UpdatePicture);
-  // filterDiscussed.addEventListener('click', drawPicture());
-
-  // filters.addEventListener('click', sortFilter);
-
-
-  // filterPopular.addEventListener('click', function () {
-  //   var vv = window.pictures.slice(0);
-  //   // vv.sort(sortByLikes);
-  //   reset(pic);
-  //   drawPicture(vv);
-  //   console.log(vv);
-  // });
-  //
-  // filterDiscussed.addEventListener('click', function () {
-  //   console.log(window.pictures);
-  //   reset(pic);
-  //   drawPicture(window.pictures);
-  // });
-  //
-  // filterRandom.addEventListener('click', function () {
-  //   var vvv = window.pictures.slice(0).sort(compareRandom).splice(0, 10);
-  //   console.log(vvv);
-  //   reset(pic);
-  //   drawPicture(vvv);
-  // });
+  // Навешиваем обработчики
+  filterDiscussed.addEventListener('click', setSortPicture);
+  filterPopular.addEventListener('click', setSortPicture);
+  filterRandom.addEventListener('click', setSortPicture);
+  filterRecommend.addEventListener('click', setSortPicture);
 })();
