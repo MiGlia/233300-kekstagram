@@ -10,12 +10,9 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === statusOk) {
-        onLoad(xhr.response);
-      } else {
-        onError(xhr.response);
-      }
+      return (xhr.status === statusOk) ? onLoad(xhr.response) : onError(xhr.response);
     });
+
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
     });

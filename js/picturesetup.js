@@ -4,8 +4,11 @@
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadFormCancel = document.querySelector('.upload-form-cancel');
+  var buttonDec = document.querySelector('.upload-resize-controls-button-dec');
+  var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
+  var controlValue = document.querySelector('.upload-resize-controls-value');
+  var effectImage = document.querySelector('.effect-image-preview');
   var ESC_KEYCODE = 27;
-  // var uploadEffectLevel = document.querySelector('.upload-effect-level');
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
@@ -43,13 +46,6 @@
   // Навешиваем обработчики событий
   uploadFile.addEventListener('change', openPopup);
   uploadFormCancel.addEventListener('click', closePopup);
-
-  // Объявляем переменные для кнопок изменяющих масштаб
-  var buttonDec = document.querySelector('.upload-resize-controls-button-dec');
-  var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
-
-  var controlValue = document.querySelector('.upload-resize-controls-value');
-  var effectImage = document.querySelector('.effect-image-preview');
 
   // Функции для изменеия надписи масштаба на кнопках и добавления
   // картинке соответствующего этому масштабу стиля scale

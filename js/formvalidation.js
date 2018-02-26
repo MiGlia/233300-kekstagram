@@ -1,8 +1,9 @@
 'use strict';
 (function () {
 // Объявляем переменные
-  var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
+  var uploadFormHashtag = document.querySelector('.upload-form-hashtags');
   var uploadFormDescription = document.querySelector('.upload-form-description');
+  var uploadForm = document.querySelector('.upload-form');
   var MAX_LENGTH_OF_HASHTAG = 20;
   var MAX_COUNT_HASHTAG = 5;
 
@@ -60,13 +61,11 @@
     e.target.style.border = '2px solid red';
   }
   // навешиваем обработчики событий
-  uploadFormHashtags.addEventListener('input', onInputTagInvalid);
-
-  var uploadForm = document.querySelector('.upload-form');
+  uploadFormHashtag.addEventListener('input', onInputTagInvalid);
 
   // Форма сброса полей ввода информации у фото
   function formReset() {
-    uploadFormHashtags.value = '';
+    uploadFormHashtag.value = '';
     uploadFormDescription.value = '';
   }
 

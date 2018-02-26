@@ -1,5 +1,8 @@
 'use strict';
 (function () {
+  var ENTER_KEYCODE = 13;
+  var ESC_KEYCODE = 27;
+
   var arrLength = {
     min: 1,
     max: 3
@@ -27,10 +30,39 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  // Функция для перемешивания массива
+  function compareRandom(a, b) {
+
+    if (a > b) {
+      return 1;
+    }
+    if (a < b) {
+      return -1;
+    }
+    return Math.random() - 0.5;
+  }
+
+  // Функция по нажатию на ESC
+  function isEscEvent(evt, action) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      action();
+    }
+  }
+
+  // Функция по нажатию на ENTER
+  function isEnterEvent(evt, action) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      action();
+    }
+  }
+
   window.util = {
     getNewOArrRandomLength: getNewOArrRandomLength,
     getRandomNorepeatArrayIndex: getRandomNorepeatArrayIndex,
     getRandomValueFromArr: getRandomValueFromArr,
-    getRandomValue: getRandomValue
+    getRandomValue: getRandomValue,
+    compareRandom: compareRandom,
+    isEscEvent: isEscEvent,
+    isEnterEvent: isEnterEvent
   };
 })();
