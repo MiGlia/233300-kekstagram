@@ -4,6 +4,14 @@
   var similarPictureTemplate = document.querySelector('#picture-template').content;
   // Создаем фрагмент для вставки фотографий
   var pictureFragment = document.createDocumentFragment();
+  var filtersBlock = document.querySelector('.filters');
+  var filterDiscussed = document.querySelector('#filter-discussed');
+  var filterPopular = document.querySelector('#filter-popular');
+  var filterRandom = document.querySelector('#filter-random');
+  var filterRecommend = document.querySelector('#filter-recommend');
+  var picElements = document.querySelector('.pictures');
+  var galleryOverlay = document.querySelector('.gallery-overlay');
+  var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
 
   // Функция для копирования шаблона и вставки в него данных
   function renderPicture(arr) {
@@ -20,27 +28,25 @@
     var pictures = changeFilterSort();
     pictures.forEach(function (elemPhotoArr) {
       pictureFragment.appendChild(renderPicture(elemPhotoArr));
-      pictureContainer.appendChild(pictureFragment);
+      picElements.appendChild(pictureFragment);
     });
+
+    Array.prototype.forEach.call(picElements.querySelectorAll('.picture'), function (item, index) {
+      item.dataSource = pictures[index];
+    });
+
     return pictures;
   }
 
   // Загрузка с сервера
-  window.backend.load(sucsessfulLoad, window.backend.errorHandler);
+  window.backend.load(onSucsessfulLoad, window.backend.onErrorHandler);
 
   // Успешная загрузка
-  function sucsessfulLoad(pictures) {
+  function onSucsessfulLoad(pictures) {
     window.pictures = pictures;
     filtersBlock.classList.remove('filters-inactive');
     drawPicture();
   }
-
-  var filtersBlock = document.querySelector('.filters');
-  var filterDiscussed = document.querySelector('#filter-discussed');
-  var filterPopular = document.querySelector('#filter-popular');
-  var filterRandom = document.querySelector('#filter-random');
-  var filterRecommend = document.querySelector('#filter-recommend');
-  var picElements = document.querySelector('.pictures');
 
   // Функция сортировки массива по комментариям
   function getSortArrByComments(pictures) {
@@ -109,56 +115,41 @@
   filterRandom.addEventListener('click', setSortPicture);
   filterRecommend.addEventListener('click', setSortPicture);
 
-
-  // Находим блок для вставки сгенерированных фотографий
-  var pictureContainer = document.querySelector('.pictures');
-  // Находим блок с увеличенным фото
-  var overlayElement = document.querySelector('.gallery-overlay');
-
-  // Функция для открытя увеличенной картинки по клику на соответствующую картинку в галерее
-  function onShowPhoto(e) {
-    e.preventDefault();
-    var target = e.target; // определяем картинку по которой был клик
-    for (var i = 0; i < pictureContainer.children.length; i++) {
-      if (pictureContainer.children[i].querySelector('img') === target) { // Если картинка совпадает с картинкой по которой был сделан клик, то вставляем данные элемента в блок с увеличенным фото
-        getOverlayPhoto(drawPicture()[i]);
-        openOverlay();
-      }
-    }
+  function onGalleryOverlayEscPress(evt) {
+    window.util.isEscEvent(evt, onGalleryOverlayClose);
   }
 
-  // Вставляем элемент из сгенерированного массива в блок с увеличенным фото
-  function getOverlayPhoto(photo) {
-    overlayElement.querySelector('img').src = photo.url;
-    overlayElement.querySelector('.likes-count').textContent = photo.likes;
-    overlayElement.querySelector('.comments-count').textContent = photo.comments;
-    return overlayElement;
+  function onGalleryOverlayClose() {
+    galleryOverlay.classList.add('hidden');
+    document.removeEventListener('keydown', onGalleryOverlayEscPress);
   }
 
-  // Объявляем переменные
-  var galleryOverlay = document.querySelector('.gallery-overlay');
-  var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
-
-  // Функция для открытия окна с увеличенным фото
-  function openOverlay() {
-    overlayElement.classList.remove('hidden');
-    document.addEventListener('keydown', onOverlayEscPress);
+  function onGalleryOverlayOpen() {
+    galleryOverlay.classList.remove('hidden');
+    document.addEventListener('keydown', onGalleryOverlayEscPress);
   }
 
-  // Функция для закрытия окна с увеличенным фото
-  function closeOverlay() {
-    overlayElement.classList.add('hidden');
-    document.removeEventListener('keydown', onOverlayEscPress);
-  }
 
-  // Функция для закрытия окна с увеличенным фото с клавиши Esc
-  function onOverlayEscPress(e) {
-    if (e.keyCode === 27) {
-      closeOverlay();
-    }
-  }
+  // Обработчик по клику на фотографию на фазе захвата
+  picElements.addEventListener('click', function (evt) {
+    evt.preventDefault(); // чтобы клик по ссылке не перезагружал страницу
+    window.preview(evt.target, galleryOverlay, onGalleryOverlayOpen);
+  });
 
-  // Навешиваем обработчики событий
-  pictureContainer.addEventListener('click', onShowPhoto);
-  galleryOverlayClose.addEventListener('click', closeOverlay);
+  // Обработчик по нажатию на ENTER, когда фотография в фокусе
+  picElements.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, function () {
+      evt.preventDefault(); // чтобы клик по ссылке не перезагружал страницу
+      window.preview(evt.target, galleryOverlay, onGalleryOverlayOpen);
+    });
+  });
+
+  // Обработчик по клику на крестик в галерее
+  galleryOverlayClose.addEventListener('click', onGalleryOverlayClose);
+
+  // Обработчик по нажатию на ENTER, когда крестик в галерее в фокусе
+  galleryOverlayClose.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, onGalleryOverlayClose);
+  });
+
 })();

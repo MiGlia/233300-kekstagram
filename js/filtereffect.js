@@ -2,6 +2,7 @@
 (function () {
   var uploadEffectLevel = document.querySelector('.upload-effect-level');
   var uploadEffectControls = document.querySelector('.upload-effect-controls');
+  var inputNonFilter = document.querySelector('#upload-effect-none');
   // Объявляем Массивы классов и id и фильтров
   var ARR_OF_INPUT_IDS = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
   var ARR_OF_IMAGE_CLASSES = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
@@ -108,8 +109,6 @@
     var coef = window.slider.uploadEffectLevelPin.offsetLeft / MAX_SLIDER_VALUE;
     window.picturesetup.effectImage.style.filter = filterName + '(' + (maxValue * coef) + simbol + ')';
   }
-
-  var inputNonFilter = document.querySelector('#upload-effect-none');
 
   // Функция для скрытия/показа слайдера
   function setClassHiddenToSlider() {
