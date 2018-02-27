@@ -28,6 +28,11 @@ body {
   display: none;
 }
 
+.upload-form-preview img {
+  max-width: 600px;
+  width: 100%;
+}
+
 /* Фильтры */
 
 .filters {
