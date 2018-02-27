@@ -8,7 +8,6 @@
   var buttonInc = document.querySelector('.upload-resize-controls-button-inc');
   var controlValue = document.querySelector('.upload-resize-controls-value');
   var effectImage = document.querySelector('.effect-image-preview');
-  var ESC_KEYCODE = 27;
 
   // Функция для открытия окна Редактирования фото
   // Удаляем класс hidden и добавляем обработчик событий который закрывает
@@ -34,7 +33,7 @@
   // Если нажатие происходит в TEXTAREA, то отменяем закрытие окна
   function onPopupEscPress(e) {
     var target = e.target;
-    if (e.keyCode === ESC_KEYCODE) {
+    if (e.keyCode === window.util.ESC_KEYCODE) {
       if (target.tagName === 'TEXTAREA') {
         e.preventDefault();
       } else {

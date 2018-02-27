@@ -4,7 +4,6 @@
   var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin');
   var uploadEffectLevelVal = document.querySelector('.upload-effect-level-val');
 
-
   // добавляем обработчик на маркер для перемещения пина
   uploadEffectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

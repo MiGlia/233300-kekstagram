@@ -1,14 +1,14 @@
 'use strict';
 (function () {
-  var uploadEffectLevel = document.querySelector('.upload-effect-level');
-  var uploadEffectControls = document.querySelector('.upload-effect-controls');
-  var inputNonFilter = document.querySelector('#upload-effect-none');
   // Объявляем Массивы классов и id и фильтров
   var ARR_OF_INPUT_IDS = ['upload-effect-none', 'upload-effect-chrome', 'upload-effect-sepia', 'upload-effect-marvin', 'upload-effect-phobos', 'upload-effect-heat'];
   var ARR_OF_IMAGE_CLASSES = ['effect-none', 'effect-chrome', 'effect-sepia', 'effect-marvin', 'effect-phobos', 'effect-heat'];
   var ARR_OF_IMAGE_FILTERS = ['none', 'grayscale', 'sepia', 'invert', 'blur', 'brightness'];
   var MAX_SLIDER_VALUE = 455;
   var START_SLIDER_VALUE = '455px';
+  var uploadEffectLevel = document.querySelector('.upload-effect-level');
+  var uploadEffectControls = document.querySelector('.upload-effect-controls');
+  var inputNonFilter = document.querySelector('#upload-effect-none');
 
   // Фуекция для смены филтра на редактируемой картинке
   // Если id родителя перед элементом на который произошло нажатие и не равно DIV

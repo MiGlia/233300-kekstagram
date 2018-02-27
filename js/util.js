@@ -57,6 +57,7 @@
   }
 
   window.util = {
+    ESC_KEYCODE: ESC_KEYCODE,
     getNewOArrRandomLength: getNewOArrRandomLength,
     getRandomNorepeatArrayIndex: getRandomNorepeatArrayIndex,
     getRandomValueFromArr: getRandomValueFromArr,

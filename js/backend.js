@@ -1,8 +1,8 @@
 'use strict';
 (function () {
   var URL = 'https://js.dump.academy/kekstagram';
-  var serverTime = 10000;
-  var statusOk = 200;
+  var SERVER_TIME = 10000;
+  var STATUS_OK = 200;
 
   //  Функция для обработки ошибочных ситуаций.
   var setup = function (onLoad, onError) {
@@ -10,7 +10,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      return (xhr.status === statusOk) ? onLoad(xhr.response) : onError(xhr.response);
+      return (xhr.status === STATUS_OK) ? onLoad(xhr.response) : onError(xhr.response);
     });
 
     xhr.addEventListener('error', function () {
@@ -20,7 +20,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = serverTime; // 10s
+    xhr.timeout = SERVER_TIME; // 10s
 
     return xhr;
   };

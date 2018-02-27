@@ -1,11 +1,12 @@
 'use strict';
 (function () {
 // Объявляем переменные
+  var MAX_LENGTH_OF_HASHTAG = 20;
+  var MIN_LENGTH_OF_HASHTAG = 1;
+  var MAX_COUNT_HASHTAG = 5;
   var uploadFormHashtag = document.querySelector('.upload-form-hashtags');
   var uploadFormDescription = document.querySelector('.upload-form-description');
   var uploadForm = document.querySelector('.upload-form');
-  var MAX_LENGTH_OF_HASHTAG = 20;
-  var MAX_COUNT_HASHTAG = 5;
 
   // Функцмя для вылидации поля с хэштегами
   function onInputTagInvalid(e) {
@@ -25,6 +26,12 @@
       // проверка на количество символов в хэштеге
       if (hashtag.length > MAX_LENGTH_OF_HASHTAG) {
         e.target.setCustomValidity('Максимальная длина одного хэш-тега 20 символов');
+        setErrorRedLine(e);
+        return;
+      }
+
+      if (hashtag.length === MIN_LENGTH_OF_HASHTAG) {
+        e.target.setCustomValidity('Минимальная длина одного хэш-тега не должна состоять из 1 символа');
         setErrorRedLine(e);
         return;
       }

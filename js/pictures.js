@@ -4,12 +4,12 @@
   var similarPictureTemplate = document.querySelector('#picture-template').content;
   // Создаем фрагмент для вставки фотографий
   var pictureFragment = document.createDocumentFragment();
-  var filtersBlock = document.querySelector('.filters');
+  var filterBlock = document.querySelector('.filters');
   var filterDiscussed = document.querySelector('#filter-discussed');
   var filterPopular = document.querySelector('#filter-popular');
   var filterRandom = document.querySelector('#filter-random');
   var filterRecommend = document.querySelector('#filter-recommend');
-  var picElements = document.querySelector('.pictures');
+  var picElement = document.querySelector('.pictures');
   var galleryOverlay = document.querySelector('.gallery-overlay');
   var galleryOverlayClose = galleryOverlay.querySelector('.gallery-overlay-close');
 
@@ -28,10 +28,10 @@
     var pictures = changeFilterSort();
     pictures.forEach(function (elemPhotoArr) {
       pictureFragment.appendChild(renderPicture(elemPhotoArr));
-      picElements.appendChild(pictureFragment);
+      picElement.appendChild(pictureFragment);
     });
 
-    Array.prototype.forEach.call(picElements.querySelectorAll('.picture'), function (item, index) {
+    Array.prototype.forEach.call(picElement.querySelectorAll('.picture'), function (item, index) {
       item.dataSource = pictures[index];
     });
 
@@ -44,7 +44,7 @@
   // Успешная загрузка
   function onSucsessfulLoad(pictures) {
     window.pictures = pictures;
-    filtersBlock.classList.remove('filters-inactive');
+    filterBlock.classList.remove('filters-inactive');
     drawPicture();
   }
 
@@ -101,19 +101,19 @@
 
   // Функция для отрисовки отсортированных фото
   function setSortPicture() {
-    resetPicture(picElements);
+    resetPicture(picElement);
     drawPicture();
   }
 
-  filtersBlock.addEventListener('change', function () {
+  function addDebounce() {
     window.debounce(setSortPicture);
-  });
+  }
 
   // Навешиваем обработчики
-  filterDiscussed.addEventListener('click', setSortPicture);
-  filterPopular.addEventListener('click', setSortPicture);
-  filterRandom.addEventListener('click', setSortPicture);
-  filterRecommend.addEventListener('click', setSortPicture);
+  filterDiscussed.addEventListener('click', addDebounce);
+  filterPopular.addEventListener('click', addDebounce);
+  filterRandom.addEventListener('click', addDebounce);
+  filterRecommend.addEventListener('click', addDebounce);
 
   function onGalleryOverlayEscPress(evt) {
     window.util.isEscEvent(evt, onGalleryOverlayClose);
@@ -131,13 +131,13 @@
 
 
   // Обработчик по клику на фотографию на фазе захвата
-  picElements.addEventListener('click', function (evt) {
+  picElement.addEventListener('click', function (evt) {
     evt.preventDefault(); // чтобы клик по ссылке не перезагружал страницу
     window.preview(evt.target, galleryOverlay, onGalleryOverlayOpen);
   });
 
   // Обработчик по нажатию на ENTER, когда фотография в фокусе
-  picElements.addEventListener('keydown', function (evt) {
+  picElement.addEventListener('keydown', function (evt) {
     window.util.isEnterEvent(evt, function () {
       evt.preventDefault(); // чтобы клик по ссылке не перезагружал страницу
       window.preview(evt.target, galleryOverlay, onGalleryOverlayOpen);
